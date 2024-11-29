@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "slew-model"
+#dynamic = ["version"]
+description = "Compute azimuth and elevaltion slew rate and offset for VLBI antenna"
+readme = "README.md"
+version = "1.0.0"
+license = {file = "GPL-3.0"}
+authors = [
+    { name = "Mario Berube", email = "mario.berube@nviinc.com" },
+]
+keywords = [
+    "antenna",
+    "vlbi",
+]
+dependencies = [
+    "matplotlib",
+    "numpy",
+    "scipy",
+    "sqlalchemy",
+]
+
+[project.scripts]
+slew = "slew.main:main"
+
+[project.urls]
+Homepage = "http://github.com/"
+
+#[tool.hatch.version]
+#path = "slew/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "/slew",
+]

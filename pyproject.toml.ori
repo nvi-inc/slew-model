@@ -1,0 +1,10 @@
+[project]
+name = "slew-model"
+description = "Compute antenna slew models from log files"
+requires-python = ">=3.9.18"
+version = "1.0.0"
+authors = [{name = "Mario Berube", email = "mario.berube@nviinc.com"}]
+license = {file = "GPL-3.0"}
+readme = "README.md"
+dependencies = ["numpy == 1.26.4",
+]
