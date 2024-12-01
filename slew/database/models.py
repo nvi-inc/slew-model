@@ -49,9 +49,10 @@ class Scan(Base):
         return self.slew_time, self.slew_az, self.slew_el
 
 
-def find(dbase, name, session, station):
+def find(dbase, name, session, station, source):
     return (dbase.orm_ses.query(Scan).filter(
-        and_(Scan.name.like(f'{name}%'), Scan.session == session, Scan.station == station)).first())
+        and_(Scan.name.like(f'{name}%'), Scan.session == session,
+             Scan.station == station, Scan.source == source)).first())
 
 
 def get_station_list(dbase):

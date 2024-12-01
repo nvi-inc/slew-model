@@ -24,8 +24,8 @@ def read_azel(dbase, path, station, session):
             az_el, duration = data[sta_id], re.findall(r'.{4}', durations)[sta_id]
             if az_el.strip() and duration.strip():
                 time_tag, name, alias = utc(sked=start), start[2:10], f'no{no:05d}'
-                if (scan := find(dbase, name=name, session=session, station=station))\
-                        or (scan := find(dbase, name=alias, session=session, station=station)):
+                if (scan := find(dbase, name=name, session=session, station=station, source=source))\
+                        or (scan := find(dbase, name=alias, session=session, station=station, source=source)):
                     scan.azimuth, scan.elevation = map(float, az_el.split())
                     if previous:
                         scan.slew_az = abs(scan.azimuth - previous.azimuth)
