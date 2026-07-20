@@ -5,7 +5,7 @@ setup(
     packages=['slew', 'slew.database'],
     description='Compute azimuth and elevaltion slew rate and offset for VLBI antenna',
     version='1.1.7',
-    url='http://github.com/',
+    url='https://github.com/nvi-inc/slew-model.git',
     author='Mario Berube',
     author_email='mario.berube@nviinc.com',
     keywords=['vlbi', 'antenna'],

@@ -55,8 +55,10 @@ def read_azel(dbase, path, station, location, session):
                         or (scan := find(dbase, name=alias, session=session, station=station, source=source)):
                     scan.azimuth, scan.elevation = map(float, az_el.split())
                     az, el = compute_azel(ant_loc, scan.stop, scan)
+                    #print(scan.name, scan.azimuth, az, scan.elevation, el)
                     setattr(scan, 'stop_az', az)
                     setattr(scan, 'stop_el', el)
+                    scan.azimuth, scan.elevation = az, el
                     if previous:
                         az, el = compute_azel(ant_loc, previous.start, previous)
 

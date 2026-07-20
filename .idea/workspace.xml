@@ -5,15 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b837213-6700-49f1-962e-f1a6b6b2816b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/slew-model.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/slew-model.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/slew_model-1.0.0-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/slew_model-1.1.0-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/slew_model-1.1.1-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/slew_model-1.1.2-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/slew_model-1.1.5-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/slew_model-1.1.5.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/slew_model-1.1.7-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/slew_model-1.1.7.tar.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slew/azel.py" beforeDir="false" afterPath="$PROJECT_DIR$/slew/azel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slew/database/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/slew/database/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slew/fslog.py" beforeDir="false" afterPath="$PROJECT_DIR$/slew/fslog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slew/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/slew/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slew/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/slew/model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
