@@ -1,3 +1,4 @@
+
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Float, and_
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -12,6 +13,9 @@ class Scan(Base):
     station = Column('station', String(2), primary_key=True)
     name = Column('name', String(50), primary_key=True)
     source = Column('source', String(15), nullable=False)
+    src_ra = Column('ra', String(15), nullable=False)
+    src_dec = Column('dec', String(15), nullable=False)
+    src_epoch = Column('epoch', String(15), nullable=False)
 
     start = Column('start', DateTime, nullable=False)
     stop = Column('stop', DateTime, nullable=False)
@@ -35,14 +39,17 @@ class Scan(Base):
         return f"scan {self.name} {self.source} {self.start} {self.duration})"
 
     def __str__(self):
-        return f"{self.name} {self.session} {self.source} {self.start} {self.stop} {self.duration})"
+        def t_str(val):
+            return val.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-4]
+        return (f"{self.name:10s} {self.session:12s} {self.source:12s} {t_str(self.start)} "
+                f"{t_str(self.stop)} {self.duration:6.2f} {'radar' if self.radar else 'none'}")
 
     def __init__(self, name, station, session):
         self.name, self.station, self.session = name, station, session
 
     @property
     def duration(self):
-        return (self.start - self.stop).total_seconds()
+        return (self.stop - self.start).total_seconds()
 
     @property
     def expected(self):
