@@ -61,9 +61,9 @@ vo6014/vo6014mg_full.log.bz2
 
 ## Usage
 
-To compute a model for a specific station.
+cd to your working directory.  
 
-cd to your working directory.
+To compute a model for a specific station using all sessions.
 
 bin/slew station_code
 
