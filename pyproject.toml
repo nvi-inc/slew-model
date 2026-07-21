@@ -4,10 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 name = "slew-model"
-#dynamic = ["version"]
 description = "Compute azimuth and elevation slew rate and offset for VLBI antenna"
 readme = "README.md"
-version = "1.1.8"
+version = "1.1.14"
 license = {file = "GPL-3.0"}
 authors = [
     { name = "Mario Berube", email = "mario.berube@nviinc.com" },
@@ -21,11 +20,12 @@ dependencies = [
     "numpy",
     "scipy",
     "sqlalchemy",
-    "astropy",
+    "astropy"
 ]
 
 [project.scripts]
 slew = "slew.main:main"
+config = "slew.main:config"
 
 [project.urls]
 Homepage = "https://github.com/nvi-inc/slew-model.git"

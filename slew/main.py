@@ -1,15 +1,43 @@
 import argparse
+import sys
 
 from pathlib import Path
 
 from slew.fslog import read_log
-from slew.azel import read_azel
 from slew.database import DBASE
 from slew.model import AntennaSlewingModel
+from slew.schedule import skd, vex
+from slew.scans import read_sched
 
-"""
-https://raw.githubusercontent.com/nvi-inc/sked_catalogs/refs/heads/main/antenna.cat
-"""
+def get_schedule(folder):
+    suffixes = [(".skd", skd.SKD), (".vex", vex.VEX)]
+    for suffix, cls in suffixes:
+        if (path := Path(folder, f"{folder}{suffix}")).exists():
+            return cls(path)
+    return None
+
+def config():
+    from urllib import request
+
+    # Create executable file
+    venv = sys.prefix
+    folder = Path(venv).parent
+    bin = Path(folder, 'bin', 'slew')
+    bin.parent.mkdir(parents=True, exist_ok=True)
+    if not bin.exists():
+        with open(bin, 'w') as f:
+            print("#!/bin/bash", file=f)
+            print(f"{venv}/bin/slew $@", file=f)
+        bin.chmod(0o755)
+    # Download antenna.cat file
+    if not (catalog := Path(folder, 'antenna.cat')).exists():
+        url = "https://raw.githubusercontent.com/nvi-inc/sked_catalogs/refs/heads/main/antenna.cat"
+        try:
+            request.urlretrieve(url, catalog.name)
+        except request.HTTPError:
+            print(f'Could not download {catalog.name} from {url}')
+
+
 def main():
 
     parser = argparse.ArgumentParser(description='Compute antenna slew models')
@@ -24,19 +52,23 @@ def main():
 
     folders = [Path(ses) for ses in sessions] if sessions else Path('.').iterdir()
 
-    asm = AntennaSlewingModel(args.catalog, code)
-    with DBASE("sqlite+pysqlite:///:memory:") as dbase:
-        for folder in folders:
-            if folder.is_dir() and (log := Path(folder, f'{folder.name}{code.lower()}.log')).exists() \
-                    and (azel := Path(folder, f'{folder.name}.azel')).exists():
-                print(f'Reading {log}')
-                location = read_log(dbase, log, args.verbose)
-                read_azel(dbase, azel, code, location, folder.name)
+    try:
+        asm = AntennaSlewingModel(args.catalog, code)
+        with DBASE("sqlite+pysqlite:///:memory:") as dbase:
+            for folder in folders:
+                if folder.is_dir() and (sched := get_schedule(folder)):
+                    for suffix in ('.log', '_full.log.bz2'):
+                        if (log := Path(folder, f'{folder.name}{code.lower()}{suffix}')).exists():
+                            print(f'Reading {log}')
+                            location = read_log(dbase, log, args.verbose)
+                            read_sched(dbase, sched, code, folder.name, location)
+                            break
 
-        asm.process(dbase)
+            asm.process(dbase)
+    except Exception as err:
+        print(f"{str(err)} Terminated!")
 
 
 if __name__ == '__main__':
 
-    import sys
     sys.exit(main())

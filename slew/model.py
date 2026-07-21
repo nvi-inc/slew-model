@@ -1,7 +1,9 @@
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+
 from collections import defaultdict
+from urllib import request
 
 from copy import deepcopy
 from pathlib import Path
@@ -77,7 +79,12 @@ class AntennaSlewingModel:
 
     def get_antenna_info(self, catalog):
         if not (path := Path(catalog)).exists():
-            raise Exception(f'Could not find {catalog}')
+            print(f'Could not find {path.name} file. Downloading it.')
+            url = "https://raw.githubusercontent.com/nvi-inc/sked_catalogs/refs/heads/main/antenna.cat"
+            try:
+                request.urlretrieve(url, path.name)
+            except request.HTTPError:
+                raise Exception(f'Could not download {path.name} from {url}')
         with open(path) as f:
             for line in f:
                 if line.strip() and not line.startswith('*') and (info := line.split())[-3] == self.code:
@@ -88,13 +95,11 @@ class AntennaSlewingModel:
 
     def get_data(self, dbase):
         records = get_station_records(dbase, self.code)
-        #for rec in records:
         scans = [dict(name=rec.name, d_az=rec.slew_az, d_el=rec.slew_el, dt=rec.slew_time, use=rec.use,
                       which=rec.last) for rec in records if rec.use and rec.radar is False]
         print(f'Found {len(scans)} useful scans')
         if len(scans) < 10:
-            print('Not enough points to process')
-            sys.exit(0)
+            raise Exception('Not enough points to process')
         return scans
 
     def clean_scans(self, scans):
@@ -137,12 +142,11 @@ class AntennaSlewingModel:
         # Keep all scans from stations
         az_threshold = el_threshold = 1.0
         scans = self.get_data(dbase)
+        # Improve offset by fixing slope to original value.
         for _ in range(3):
             az_rec, el_rec, suspicious = self.clean_scans(scans)
             self.az_model.analyze_offset('az', az_rec)
             self.el_model.analyze_offset('el', el_rec)
-            print(f'Computed az model {self.az_model}')
-            print(f'Computed el model {self.el_model}')
 
         for _ in range(2):
             az_rec, el_rec, suspicious = self.clean_scans(scans)
@@ -175,7 +179,7 @@ class AntennaSlewingModel:
             return
         path = Path(self.code.capitalize(), f'{code[:2]}.png')
         path.parent.mkdir(exist_ok=True)
-        print(f'Generate {path} plot using {len(data):4d} points.')
+        print(f'Generated {path} plot using {len(data):4d} points.')
 
         xr, yr = zip(*rej) if len(rej) else ([], [])
         x, y, = zip(*data)

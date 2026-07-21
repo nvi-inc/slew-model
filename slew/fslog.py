@@ -1,4 +1,6 @@
+import bz2
 import re
+
 from slew import utc
 from slew.database.models import Scan
 
@@ -46,13 +48,16 @@ def read_log(dbase, path, verbose=False):
                         break
             dbase.commit()
 
-    with open(path) as fh:
+    is_bz2 = path.suffix == '.bz2'
+    decode = (lambda x: x.decode('utf8')) if is_bz2 else (lambda x: x)
+    with bz2.open(path) if is_bz2 else open(path, errors='ignore') as fh:
         max_el_err = 0.1
         wrap, radar = 'neutral', False
         name = station = session = source = start_slewing = stop_slewing = preob = None
         pos, err = [], []
         first = False
         for line in fh:
+            line = decode(line)
             if not (record := is_pcfs(line)):  # not a pcfs line
                 continue
             data = record['data']
