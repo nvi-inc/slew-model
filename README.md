@@ -3,35 +3,25 @@
 This project compute antenna slew model (rate and offset) using FS log files.
 
 ## Installation
-First created a directory and cd to it.
+First created a directory and cd to it. The config command create bin/slew file and download the antenna.cat file
 
 ```
-Create a python virtual environment.
- 
 python3 -m venv .venv
 
-Activate it.
- 
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip  install git+https://github.com/nvi-inc/slew-model.git
 
-After installation, you can create the 'slew' executable file in bin directory and download antenna.cat from repository
-Type.
-
 config
-
-You can terminate the installation with
 
 deactivate
 ```
 
-
-The application ’slew’ needs a specific structure.
- 
+### Directory structure
+The application ’slew’ needs a specific structure.\n
 The directory needs the file antenna.cat that has been downloaded by 'config'
  
-You need to create a directory for each session you want to process logs.
+You need to create a directory for each session you want to process logs.\n
 For each session, you need the skd or vex file.
  
 The directory should look like this
