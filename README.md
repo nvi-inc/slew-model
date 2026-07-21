@@ -28,8 +28,8 @@ You need session.azel or session.skd or session.vex to be able to compute azimut
 Save these files in the session directory. 
 
 The application will use the .azel file first if available.  
-If .azel not available, 'slew' will use the .skd first over the .vex file.
-Azimuth and elevation of sources are computed using python package [astropy](https://www.astropy.org).  
+If .azel not available, 'slew' will use the .skd first over the .vex file.  
+In this case, azimuth and elevation of sources are computed using python package [astropy](https://www.astropy.org).  
 
 Save also the .log or _full.log.bz2 files in the session directory.  
 The .log file will be used first.  
