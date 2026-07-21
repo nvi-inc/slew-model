@@ -1,3 +1,5 @@
 /build/
 /.venv/
 /slew_model.egg-info/
+/.DS_Store
+/.idea/
