@@ -1,5 +1,6 @@
-/build/
-/.venv/
-/slew_model.egg-info/
-/.DS_Store
-/.idea/
+.DS_Store
+build/
+vcc.egg-info/
+*__pycache__*
+.venv/
+.idea/
