@@ -1,4 +1,4 @@
-# Project Name VLBI Antenna Slew Model
+# VLBI Antenna Slew Model
 
 This project compute antenna slew model (rate and offset) using FS log files.
 
