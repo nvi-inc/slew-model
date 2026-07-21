@@ -4,7 +4,7 @@ This project compute antenna slew model (rate and offset) using FS log files.
 
 ## Installation
 First created a directory and move to it.  
-The config command at end of script creates the executable file bin/slew and download antenna.cat
+The config command at end of script creates the executable file bin/slew and download antenna.cat catalog.
 
 ```
 python3 -m venv .venv
@@ -13,7 +13,7 @@ source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip  install git+https://github.com/nvi-inc/slew-model.git
 
-make
+config
 
 deactivate
 ```

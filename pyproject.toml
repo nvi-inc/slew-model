@@ -25,7 +25,7 @@ dependencies = [
 
 [project.scripts]
 slew = "slew.main:main"
-make = "slew.main:make"
+config = "slew.main:config"
 
 [project.urls]
 Homepage = "https://github.com/nvi-inc/slew-model.git"
