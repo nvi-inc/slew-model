@@ -63,7 +63,7 @@ def main():
                             if (log := Path(folder, f'{folder.name}{code.lower()}{suffix}')).exists():
                                 print(f'Reading {log}')
                                 location = read_log(dbase, log, args.verbose)
-                                if azel:
+                                if azel.exists():
                                     read_azel(dbase, azel, code, folder.name)
                                 else:
                                     read_sched(dbase, sched, code, folder.name, location)
