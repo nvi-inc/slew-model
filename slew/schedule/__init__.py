@@ -218,6 +218,10 @@ class Schedule:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
 
+    @property
+    def path(self):
+        return self.reader.path
+
     def open(self):
         if self.reader:
             self.reader.open()

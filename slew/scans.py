@@ -34,6 +34,8 @@ def compute_azel(ant_pos, time_tag, scan):
 
 def read_sched(dbase, sched, station, session, location):
 
+    print(f'Reading {sched.path}')
+
     sched.open()
     sched.process()
 
@@ -44,22 +46,12 @@ def read_sched(dbase, sched, station, session, location):
         time_tag, alias = scheduled.start, f'no{no:05d}'
         for name in (scan_name, alias):
             if scan := find(dbase, name=name, session=session, station=station, source=scheduled.source):
-                az, el = compute_azel(ant_loc, scan.stop, scan)
-                #print(scan.name, scan.azimuth, az, scan.elevation, el)
-                setattr(scan, 'stop_az', az)
-                setattr(scan, 'stop_el', el)
-                scan.azimuth, scan.elevation = az, el
+                scan.azimuth, scan.elevation = compute_azel(ant_loc, scan.stop, scan)
                 if previous:
-                    #az, el = compute_azel(ant_loc, previous.start, previous)
-                    #print(f'azel 1 {previous.azimuth:6.2f} {}{previous.elevation:5.2f}')
-                    #print(f'azel 2 {az:6.2f} {el:5.2f}')
                     scan.slew_az = abs(scan.azimuth - previous.azimuth)
                     scan.slew_el = abs(scan.elevation - previous.elevation)
-                    #print(f'azel 1 {scan.slew_az:6.2f} {scan.slew_el:6.2f}')
-                    #print(f'azel 2 {abs(scan.stop_az - az):6.2f} {abs(scan.stop_el - el):6.2f}')
-                    #scan.slew_az, scan.slew_el = abs(scan.stop_az - az), abs(scan.stop_el - el)
                     scan.use = True
-                previous = scan  # dict(name=name, start=time_tag, end=end, az=az, el=el)
+                previous = scan
                 break
         else:
             previous = None

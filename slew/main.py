@@ -3,6 +3,7 @@ import sys
 
 from pathlib import Path
 
+from slew.azel import read_azel
 from slew.fslog import read_log
 from slew.database import DBASE
 from slew.model import AntennaSlewingModel
@@ -56,13 +57,17 @@ def main():
         asm = AntennaSlewingModel(args.catalog, code)
         with DBASE("sqlite+pysqlite:///:memory:") as dbase:
             for folder in folders:
-                if folder.is_dir() and (sched := get_schedule(folder)):
-                    for suffix in ('.log', '_full.log.bz2'):
-                        if (log := Path(folder, f'{folder.name}{code.lower()}{suffix}')).exists():
-                            print(f'Reading {log}')
-                            location = read_log(dbase, log, args.verbose)
-                            read_sched(dbase, sched, code, folder.name, location)
-                            break
+                if folder.is_dir():
+                    if (azel := Path(folder, f"{folder.name}.azel")).exists() or (sched := get_schedule(folder)):
+                        for suffix in ('.log', '_full.log.bz2'):
+                            if (log := Path(folder, f'{folder.name}{code.lower()}{suffix}')).exists():
+                                print(f'Reading {log}')
+                                location = read_log(dbase, log, args.verbose)
+                                if azel:
+                                    read_azel(dbase, azel, code, folder.name)
+                                else:
+                                    read_sched(dbase, sched, code, folder.name, location)
+                                break
 
             asm.process(dbase)
     except Exception as err:
