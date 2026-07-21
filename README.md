@@ -78,4 +78,12 @@ Other options.
 -v : Verbose. Print all records used in computation.  
 -c : Catalog. If you have a different file than antenna.cat  
 
+## Astropy Files
+
+Astropy needs IERS file data and on first usage may see the message  
+
+Downloading https://datacenter.iers.org/data/9/finals2000A.all  
+
+This is normal.
+
 
