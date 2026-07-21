@@ -26,8 +26,8 @@ Directory name must be in lower case.
 Save the schedule files (skd or vex) in the session directory.  
 Save logs or full logs in the session directory.  
 
-The application will use the .skd first over the .vex.
-It will also prefer the log over the full_log.
+The application will use the .skd first over the .vex.  
+It will also prefer the log over the full_log.  
 No need to uncompress the full log.
 
 ## Usage
@@ -40,11 +40,11 @@ bin/slew station_code
 
 if you want to specify which sessions to use.
 
-bin/slew station_code -s session_code_1 session_code_2 ...
+bin/slew station_code -s session [session ...] 
 
-Other options
--h : Help
--v : Verbose. Print all records used in computation.
--c : Catalog. If you have a different file than antenna.cat
+Other options.  
+-h : Help  
+-v : Verbose. Print all records used in computation.  
+-c : Catalog. If you have a different file than antenna.cat  
 
 

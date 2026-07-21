@@ -44,11 +44,11 @@ def main():
     parser.add_argument('-c', '--catalog', help='antenna catalog file', default='antenna.cat', required=False)
     parser.add_argument('-v', '--verbose', help='output records', action='store_true')
     parser.add_argument('station', help='station code', type=str.lower)
-    parser.add_argument('-s', '--sessions', help='session codes', nargs='+', required=False)
+    parser.add_argument('-s', '--session', help='session codes', nargs='+', required=False)
 
     args = parser.parse_args()
 
-    code, sessions = args.station, args.sessions
+    code, sessions = args.station, args.session
 
     folders = [Path(ses) for ses in sessions] if sessions else Path('.').iterdir()
 
