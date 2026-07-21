@@ -24,16 +24,19 @@ The application ’slew’ needs a specific structure.
 You need to create a directory for each session you want to process logs.  
 Directory name must be in lower case.  
 
-You need session.azel or session.skd or session.vex to be able to compute azimuth and elevation of sources.  
-Save these files in the session directory. 
+Save also the .log or _full.log.bz2 files in the session directory.  
+The .log file will be used first.  
+No need to uncompress the full log.
+
+To compute the antenna slew model, the software needs azimuth and elevation of observed source.  
+You need one of these files stored in session directory:  
+&emsp;session.azel or  
+&emsp;session.skd or  
+&emsp;session.vex  
 
 The application will use the .azel file first if available.  
 If .azel not available, 'slew' will use the .skd first over the .vex file.  
 In this case, azimuth and elevation of sources are computed using python package [astropy](https://www.astropy.org).  
-
-Save also the .log or _full.log.bz2 files in the session directory.  
-The .log file will be used first.  
-No need to uncompress the full log.
 
 ## Usage
 
