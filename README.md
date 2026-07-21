@@ -1,11 +1,15 @@
-Antenna Slew Model
+#VLBI Antenna Slew Model
 
 This project compute antenna slew model (rate and offset) using FS log files.
 
+## Installation
 First created a directory and cd to it.
+
+""""
 Create a python virtual environment.
  
 python3 -m venv .venv
+
 Activate it.
  
 source .venv/bin/activate
@@ -20,6 +24,7 @@ config
 You can terminate the installation with
 
 deactivate
+""""
 
 
 The application ’slew’ needs a specific structure.
