@@ -17,7 +17,7 @@ def get_schedule(folder):
             return cls(path)
     return None
 
-def config():
+def make():
     from urllib import request
 
     # Create executable file

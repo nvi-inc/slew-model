@@ -3,7 +3,7 @@
 This project compute antenna slew model (rate and offset) using FS log files.
 
 ## Installation
-First created a directory and cd to it.  
+First created a directory and move to it.  
 The config command at end of script creates the executable file bin/slew and download antenna.cat
 
 ```
@@ -13,7 +13,7 @@ source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip  install git+https://github.com/nvi-inc/slew-model.git
 
-config
+make
 
 deactivate
 ```
@@ -38,7 +38,7 @@ The application will use the .azel file first if available.
 If .azel not available, 'slew' will use the .skd first over the .vex file.  
 In this case, azimuth and elevation of sources are computed using python package [astropy](https://www.astropy.org).  
 
-The structure of the working directory will look like this.  
+Example of the structure of the working directory.  
 
 .venv/  
 antenna.cat  
@@ -61,13 +61,15 @@ vo6014/vo6014mg_full.log.bz2
 
 ## Usage
 
-cd to your working directory.  
+Go to your working directory.  
 
 To compute a model for a specific station using all sessions.
 
-bin/slew station_code
+bin/slew station
 
-if you want to specify which sessions to use.
+The station is the IVS 2-letters code for the station.
+
+Ff you want to specify which sessions to use.
 
 bin/slew station_code -s session [session ...] 
 
