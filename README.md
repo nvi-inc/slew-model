@@ -41,14 +41,17 @@ In this case, azimuth and elevation of sources are computed using python package
 The structure of the working directory will look like this.  
 
 .venv/  
-antenna.cat
+antenna.cat  
+
 bin/  
-bin/slew  
+bin/slew
+
 vo6007/  
 vo6007/vo6007.azel  
 vo6007/vo6007gs.log  
 vo6007/vo6007k2.log  
 vo6007/vo6007mg_full.log.bz2  
+
 vo6014/  
 vo6014/vo6014.skd  
 vo6014/vo6014gs.log  
