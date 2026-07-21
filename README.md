@@ -18,10 +18,10 @@ deactivate
 ```
 
 ### Directory structure
-The application ’slew’ needs a specific structure.\n
+The application ’slew’ needs a specific structure.<\br>
 The directory needs the file antenna.cat that has been downloaded by 'config'
  
-You need to create a directory for each session you want to process logs.\n
+You need to create a directory for each session you want to process logs.<\br>
 For each session, you need the skd or vex file.
  
 The directory should look like this
