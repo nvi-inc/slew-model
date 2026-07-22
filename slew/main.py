@@ -23,16 +23,17 @@ def config():
     # Create executable file
     venv = sys.prefix
     folder = Path(venv).parent
-    bin = Path(folder, 'bin', 'slew')
-    bin.parent.mkdir(parents=True, exist_ok=True)
+    script = Path(folder, 'bin', 'slew')
+    script.parent.mkdir(parents=True, exist_ok=True)
     if not bin.exists():
-        with open(bin, 'w') as f:
+        with open(script, 'w') as f:
             print("#!/bin/bash", file=f)
             print(f"{venv}/bin/slew $@", file=f)
-        bin.chmod(0o755)
+        script.chmod(0o755)
     # Download antenna.cat file
     if not (catalog := Path(folder, 'antenna.cat')).exists():
-        url = "https://raw.githubusercontent.com/nvi-inc/sked_catalogs/refs/heads/main/antenna.cat"
+        url = "https://api.github.com/repos/nvi-inc/sked_catalogs/contents/antenna.cat?ref=main"
+        #url = "https://raw.githubusercontent.com/nvi-inc/sked_catalogs/refs/heads/main/antenna.cat"
         try:
             request.urlretrieve(url, catalog.name)
         except request.HTTPError:
