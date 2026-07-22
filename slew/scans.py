@@ -1,14 +1,14 @@
 import re
 
-from pathlib import Path
-
 from astropy import units
 from astropy.coordinates import EarthLocation, SkyCoord, AltAz, FK5
 from astropy.time import Time
 
-from slew import utc
 from slew.database.models import find
-from slew.schedule import skd, vex
+
+get_ra = re.compile(r"(?P<d>[+-]?\d{1,3})d(?P<m>\d{2})m(?P<s>\d{2}\.\d{1,8})s.*").match
+get_dec = re.compile(r'(?P<d>[+-]?\d{2})(?P<m>\d{2})(?P<s>\d{2}\.\d?)').match
+
 
 def epoch(val):
     if val.startswith('2000'):
@@ -21,8 +21,7 @@ def to_angle(val):
 
 def compute_azel(ant_pos, time_tag, scan):
     try:
-        ra = re.match(r'(?P<h>\d{2})(?P<m>\d{2})(?P<s>\d{2}\.\d?)', scan.src_ra)
-        dec = re.match(r'(?P<d>[+-]?\d{2})(?P<m>\d{2})(?P<s>\d{2}\.\d?)', scan.src_dec)
+        ra, dec = get_ra(scan.src_ra), get_dec(scan.src_dec)
         radec = f"{ra['h']} {ra['m']} {ra['s']} {dec['d']} {dec['m']} {dec['s']}"
         src = SkyCoord(radec, unit=(units.hourangle, units.deg), frame=FK5(equinox=epoch(scan.src_epoch)))
         t = Time(time_tag.strftime('%Y-%m-%d %H:%M:%S'), format = 'iso', scale = 'utc')

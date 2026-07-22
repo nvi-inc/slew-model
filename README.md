@@ -79,3 +79,16 @@ Other options.
 -c : Catalog. If you have a different file than antenna.cat  
 
 
+## Astropy Data Sets
+
+Astropy needs some data sets that need to be updated at specific intervale.  
+This data sets are store in ~/.cache/astropy or ~/.astropy directory depending of system.
+
+You may see messages like this.
+
+Downloading https://datacenter.iers.org/data/9/finals2000A.all  
+|===================================================================| 3.7M/3.7M (100.00%)         3s
+
+This is normal but may be a problem if no internet access.
+
+

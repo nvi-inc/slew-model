@@ -19,8 +19,6 @@ def get_schedule(folder):
 
 def config():
     from urllib import request
-    from astropy.utils.data import download_file
-    from astropy.utils.iers import IERS_A_URL, IERS_A_URL_MIRROR
 
     # Create executable file
     venv = sys.prefix
@@ -39,13 +37,6 @@ def config():
             request.urlretrieve(url, catalog.name)
         except request.HTTPError:
             print(f'Could not download {catalog.name} from {url}')
-
-    # Force download the IERS-A table using the cache
-    try:
-        download_file(IERS_A_URL, cache='update', show_progress=True)
-    except Exception:
-        # Fallback to the mirror if the primary URL fails
-        download_file(IERS_A_URL_MIRROR, cache='update', show_progress=True)
 
 
 def main():
