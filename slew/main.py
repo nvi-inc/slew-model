@@ -21,16 +21,18 @@ def config():
     from urllib import request
 
     # Create executable file
+    print('Create bin/slew script')
     venv = sys.prefix
     folder = Path(venv).parent
     script = Path(folder, 'bin', 'slew')
     script.parent.mkdir(parents=True, exist_ok=True)
-    if not bin.exists():
+    if not script.exists():
         with open(script, 'w') as f:
             print("#!/bin/bash", file=f)
             print(f"{venv}/bin/slew $@", file=f)
         script.chmod(0o755)
     # Download antenna.cat file
+    print('Downloading antenna.cat latest file')
     if not (catalog := Path(folder, 'antenna.cat')).exists():
         url = "https://api.github.com/repos/nvi-inc/sked_catalogs/contents/antenna.cat?ref=main"
         #url = "https://raw.githubusercontent.com/nvi-inc/sked_catalogs/refs/heads/main/antenna.cat"
