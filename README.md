@@ -78,6 +78,10 @@ Other options.
 -v : Verbose. Print all records used in computation.  
 -c : Catalog. If you have a different file than antenna.cat  
 
+If you want to update the antenna.cat file, you can use the script.  
+
+bin/antenna
+
 
 ## Astropy Data Sets
 

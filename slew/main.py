@@ -21,25 +21,32 @@ def config():
     from urllib import request
 
     # Create executable file
-    print('Create bin/slew script')
     venv = sys.prefix
     folder = Path(venv).parent
     script = Path(folder, 'bin', 'slew')
     script.parent.mkdir(parents=True, exist_ok=True)
     if not script.exists():
+        print('Create bin/slew script')
         with open(script, 'w') as f:
             print("#!/bin/bash", file=f)
             print(f"{venv}/bin/slew $@", file=f)
         script.chmod(0o755)
+    script = Path(folder, 'bin', 'antenna')
+    if not script.exists():
+        print('Create bin/antenna script')
+        with open(script, 'w') as f:
+            print("#!/bin/bash", file=f)
+            print(f"{venv}/bin/config $@", file=f)
+        script.chmod(0o755)
+
     # Download antenna.cat file
-    print('Downloading antenna.cat latest file')
-    if not (catalog := Path(folder, 'antenna.cat')).exists():
-        url = "https://api.github.com/repos/nvi-inc/sked_catalogs/contents/antenna.cat?ref=main"
-        #url = "https://raw.githubusercontent.com/nvi-inc/sked_catalogs/refs/heads/main/antenna.cat"
-        try:
-            request.urlretrieve(url, catalog.name)
-        except request.HTTPError:
-            print(f'Could not download {catalog.name} from {url}')
+    catalog = Path(folder, 'antenna.cat')
+    print(f'Downloading {catalog.name} latest file')
+    url = "https://raw.githubusercontent.com/nvi-inc/sked_catalogs/refs/heads/main/antenna.cat"
+    try:
+        request.urlretrieve(url, catalog.name)
+    except request.HTTPError:
+        print(f'Could not download {catalog.name} from {url}')
 
 
 def main():
