@@ -22,7 +22,7 @@ class AxisModel:
         return abs(delta) * self.rate + self.offset
 
     def __str__(self):
-        return f'{60/self.rate:7.1f}+{self.offset:4.1f} R{self.r_value:.3f} P{self.p_value:.3f}'
+        return f'{60/self.rate:7.1f}+{self.offset:4.1f} R:{self.r_value:5.3f} P:{self.p_value:5.3f}'
 
     def title(self):
         return f'Rate: {60/self.rate:.1f} Offset: {self.offset:.1f}'
@@ -141,12 +141,9 @@ class AntennaSlewingModel:
     def process(self, dbase):
         # Keep all scans from stations
         az_threshold = el_threshold = 1.0
-        print('get data')
         scans = self.get_data(dbase)
-        print('scans', len(scans))
         # Improve offset by fixing slope to original value.
         for _ in range(3):
-            print('offset', _)
             az_rec, el_rec, suspicious = self.clean_scans(scans)
             self.az_model.analyze_offset('az', az_rec)
             self.el_model.analyze_offset('el', el_rec)

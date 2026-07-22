@@ -6,22 +6,21 @@ from astropy.time import Time
 
 from slew.database.models import find
 
-get_ra = re.compile(r"(?P<d>[+-]?\d{1,3})d(?P<m>\d{2})m(?P<s>\d{2}\.\d{1,8})s.*").match
+get_ra = re.compile(r'(?P<h>\d{2})(?P<m>\d{2})(?P<s>\d{2}\.\d?)').match
 get_dec = re.compile(r'(?P<d>[+-]?\d{2})(?P<m>\d{2})(?P<s>\d{2}\.\d?)').match
-
+angle = re.compile(r"(?P<d>[+-]?\d{1,3})d(?P<m>\d{2})m(?P<s>\d{2}\.\d{1,8})s.*").match
 
 def epoch(val):
-    if val.startswith('2000'):
-        return 'J2000.0'
-    return 'B1950.0'
+    return 'J2000.0' if val.startswith('2000') else 'B1950.0'
 
 def to_angle(val):
-    match = re.match(r"(?P<d>[+-]?\d{1,3})d(?P<m>\d{2})m(?P<s>\d{2}\.\d{1,8})s.*", str(val))
+    match = angle(str(val))
     return float(match['d']) + float(match['m']) / 60 + float(match['s']) / 3600
 
 def compute_azel(ant_pos, time_tag, scan):
     try:
-        ra, dec = get_ra(scan.src_ra), get_dec(scan.src_dec)
+        ra = get_ra(scan.src_ra)
+        dec = get_dec(scan.src_dec)
         radec = f"{ra['h']} {ra['m']} {ra['s']} {dec['d']} {dec['m']} {dec['s']}"
         src = SkyCoord(radec, unit=(units.hourangle, units.deg), frame=FK5(equinox=epoch(scan.src_epoch)))
         t = Time(time_tag.strftime('%Y-%m-%d %H:%M:%S'), format = 'iso', scale = 'utc')
