@@ -193,8 +193,7 @@ class AntennaSlewingModel:
         xy = fig.add_axes([0.1, 0.1, 0.8, 0.8])
         #hist = fig.add_axes([0.7, 0.2, 0.2, 0.25])
 
-        #current, estimated = (self.current_az_model, self.az_model) if code == 'azimuth' else (self.current_el_model, self.el_model)
-        xy.plot(x, xo * current.rate + current.offset, 'c-', label=f'Current model {current}', markersize=2)
+        xy.plot(x, xo * current.rate + current.offset, 'c-', label=f'Current model {current.title}', markersize=2)
         xy.plot(x, xo * estimated.rate + estimated.offset, 'k-', label='Calculated model', markersize=2)
         #xy.plot(xo / calc[0] + calc[1], x, 'k-', label='Calculated model', markersize=2)
         xy.plot(xr, yr, 'rx', label=discarded_points, markersize=2)
