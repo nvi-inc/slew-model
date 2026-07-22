@@ -141,13 +141,17 @@ class AntennaSlewingModel:
     def process(self, dbase):
         # Keep all scans from stations
         az_threshold = el_threshold = 1.0
+        print('get data')
         scans = self.get_data(dbase)
+        print('scans', len(scans))
         # Improve offset by fixing slope to original value.
         for _ in range(3):
+            print('offset', _)
             az_rec, el_rec, suspicious = self.clean_scans(scans)
             self.az_model.analyze_offset('az', az_rec)
             self.el_model.analyze_offset('el', el_rec)
 
+        az_rec, el_rec, suspicious = [], [], 0
         for _ in range(2):
             az_rec, el_rec, suspicious = self.clean_scans(scans)
             self.az_model.analyze_offset('az', az_rec, update=True)
