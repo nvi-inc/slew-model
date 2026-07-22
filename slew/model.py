@@ -22,7 +22,7 @@ class AxisModel:
         return abs(delta) * self.rate + self.offset
 
     def __str__(self):
-        return f'{60/self.rate:7.1f}+{self.offset:4.1f} R:{self.r_value:5.3f} P:{self.p_value:5.3f}'
+        return f'{60/self.rate:7.1f} +{self.offset:4.1f} R:{self.r_value:5.3f} P:{self.p_value:5.3f}'
 
     def title(self):
         return f'Rate: {60/self.rate:.1f} Offset: {self.offset:.1f}'
