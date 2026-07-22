@@ -24,6 +24,10 @@ class AxisModel:
     def __str__(self):
         return f'{60/self.rate:7.1f} +{self.offset:4.1f} R:{self.r_value:5.3f} P:{self.p_value:5.3f}'
 
+    @property
+    def vals(self):
+        return f'{60/self.rate:7.1f} +{self.offset:4.1f}'
+
     def title(self):
         return f'Rate: {60/self.rate:.1f} Offset: {self.offset:.1f}'
 
@@ -193,7 +197,7 @@ class AntennaSlewingModel:
         xy = fig.add_axes([0.1, 0.1, 0.8, 0.8])
         #hist = fig.add_axes([0.7, 0.2, 0.2, 0.25])
 
-        xy.plot(x, xo * current.rate + current.offset, 'c-', label=f'Current model {current.title}', markersize=2)
+        xy.plot(x, xo * current.rate + current.offset, 'c-', label=f'Current model {current.vals}', markersize=2)
         xy.plot(x, xo * estimated.rate + estimated.offset, 'k-', label='Calculated model', markersize=2)
         #xy.plot(xo / calc[0] + calc[1], x, 'k-', label='Calculated model', markersize=2)
         xy.plot(xr, yr, 'rx', label=discarded_points, markersize=2)
